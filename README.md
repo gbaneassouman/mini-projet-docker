@@ -23,6 +23,16 @@ Le premier module est une API REST (avec authentification de base requise) qui e
 
 Le deuxième module est une application web écrite en HTML + PHP qui permet à l'utilisateur final d'obtenir une liste d'étudiants.
 
+# Bésoins
+
+My job is to :
+1) Use Virtualbox as a hypervisor for the virtual machine creation
+2) Use Vagrant as infrastructure provisioner to manage the VM
+3) Install Docker and Docker-compose on the VM
+4) Build one container for each module (Backend & Fronted)
+5) Make the containers interact with each other
+6) Provide a private registry to store images
+
 ## Demo
 
 voir [ici](https://github.com/diranetafen/student-list.git "here")
