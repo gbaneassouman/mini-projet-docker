@@ -1,5 +1,5 @@
 # Mini Projet Docker (students list)
-This repo is a simple application to list student with a webserver (PHP) and API (Flask)
+Ce dépôt est une application simple pour répertorier les étudiants avec un serveur Web (PHP) et une API (Flask)
 # 
 Dans le cadre de ce projet dont le cahier des charges est à retrouver [ici](https://github.com/diranetafen/student-list.git "here"),il m'a été demandé d'aider POZOS à déployer son applicatio>
 
