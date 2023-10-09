@@ -1,7 +1,8 @@
 # Mini Projet Docker (students list)
-Ce dépôt est une application simple pour répertorier les étudiants avec un serveur Web (PHP) et une API (Flask)
+Ce projet a été réalisé dans le cadre de mon parcous au BootCamp Devops 15 de EAZYTraining avec [Dirane Tafen](https://github.com/diranetafen/)
+Il s'agit d'une simple application web développé en PHP et une API fait avec Flask qui permet de repertorier les étudiants .
 # 
-Dans le cadre de ce projet dont le cahier des charges est à retrouver [ici](https://github.com/diranetafen/student-list.git "here"),il m'a été demandé d'aider POZOS à déployer son applicatio>
+Dans le cadre de ce projet dont les spécifications techniques sont à retrouver [ici](https://github.com/diranetafen/student-list.git "here"),il m'a été demandé d'aider POZOS à déployer son application
 
 L'application à déployer comporte deux modules :
 
