@@ -54,7 +54,7 @@ Le code source de l'application peut être trouvé [ici](https://github.com/dira
 
 Les fichiers que vous devez fournir (dans votre livraison) sont le **Dockerfile** et un **docker-compose.yml** 
 
-Rôles des différents fichiers :
+### Rôles des différents fichiers :
 
 **student_age.json** : contient le nom des étudiants avec leur âge au format JSON
 **student_age.py** : contient le code source de l'API en python  
