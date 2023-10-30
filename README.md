@@ -63,15 +63,16 @@ Les fichiers que vous devez fournir (dans votre livraison) sont le **Dockerfile*
 Vous devez mettre à jour la ligne suivante avant d'exécuter le conteneur de site Web pour adapter api_ip_or_name et port
 
 voici l'url : $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages';
-# Bésoins
 
-My job is to :
-1) Use Virtualbox as a hypervisor for the virtual machine creation
-2) Use Vagrant as infrastructure provisioner to manage the VM
-3) Install Docker and Docker-compose on the VM
-4) Build one container for each module (Backend & Fronted)
-5) Make the containers interact with each other
-6) Provide a private registry to store images
+## Travail à Faire
+
+Mon travail consiste à :
+
+- Provisionner une VM avec Centos7.6 comme OS
+- Installer Docker et Docker-compose sur la VM
+- Construire un conteneur pour chaque module (Backend & Fronted)
+- Faire interagir les conteneurs les uns avec les autres
+- Fournir un registre privé pour stocker les images
 
 ## Demo
 
