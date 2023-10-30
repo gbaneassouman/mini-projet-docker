@@ -34,6 +34,7 @@ En conclusion, **POZOS** a besoin d'agilité sur sa ferme logicielle.
 ## Infrastructure
 
 Pour ce POC, vous n’utiliserez qu’une seule machine sur laquelle Docker sera installé.
+
 Le Build et le Déploiement se feront sur cette machine.
 
 POZOS vous recommande d'utiliser le système d'exploitation **centos7.6** car c'est le plus utilisé dans l'entreprise.
@@ -48,7 +49,8 @@ L'application sur laquelle vous allez travailler s'appelle *"student_list"*, cet
 - Le deuxième module est une application web écrite en **HTML + PHP** qui permet à l'utilisateur final d'obtenir une liste d'étudiants.
 
 Votre travail consiste à créer un conteneur pour chaque module et à les faire interagir les uns avec les autres.
-Le code source de l'application peut être trouvé [ici](https://github.com/diranetafen/student-list.git).
+
+Le code source de l'application peut être trouvé [ici](https://github.com/diranetafen/student-list.git).    
 
 Les fichiers que vous devez fournir (dans votre livraison) sont le **Dockerfile** et un **docker-compose.yml** 
 
