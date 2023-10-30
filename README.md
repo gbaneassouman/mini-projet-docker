@@ -68,7 +68,7 @@ voici l'url : $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ag
 
 Mon travail consiste à :
 
-- Provisionner une VM avec Centos7.6 comme OS
+- Provisionner localement une VM avec Centos7.6 comme OS
 - Installer Docker et Docker-compose sur la VM
 - Construire un conteneur pour chaque module (Backend & Fronted)
 - Faire interagir les conteneurs les uns avec les autres
