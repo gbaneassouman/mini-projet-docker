@@ -275,9 +275,11 @@ Test à partir du navigateur
 
 ## 7 - Mise en place du registre privé
 
-Nous allons procéder à la mise en place de registre prive en utilisant:
+Nous allons procéder à la mise en place de registre privé en utilisant les images ci-dessous:
 
-**registry:2** comme image du registre, et **joxit/docker-registry-ui:static** comme image du frontend
+```registry:2``` comme image du registre
+
+```joxit/docker-registry-ui:static``` comme image du frontend
 
 *production du docker compose du registre privé*
 
