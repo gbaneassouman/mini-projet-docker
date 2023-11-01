@@ -76,7 +76,7 @@ Mon travail consiste à :
 - 3 - Produire le Dockerfile 
 - 4 - Builder & Tester les images
 - 5 - Créer des conteneurs et les faire interagir les uns avec les autres 
-- 6 - Mise en place du docker-compose (**IAC**)
+- 6 - Produire le docker-compose (**IAC**)
 - 7 - Fournir un registre privé pour stocker les images
 
 
@@ -162,7 +162,7 @@ docker ps -a
 
 **Build de l'IHM (HTML & PHP)**
 
-Nous allons modifier dans le fichier *index.php* la ligne contenant l'url d'appel de l'API: 
+Pour que Nous allons modifier dans le fichier *index.php* la ligne contenant l'url d'appel de l'API: 
 $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages'; en remplaçant : 
 
 ***<api_ip_or_name:port>*** par ***student-api:5000***
@@ -193,13 +193,184 @@ docker exec webapp curl -u toto:python -X GET http://student-api:5000/pozos/api/
 </div><br/>
 
 ```
-docker stop student-api
-docker stop webapp
+docker stop student-api webapp
+docker rm student-api webapp
 docker network rm api-network
 ```
 
-### 6 -  Mise en place de l'IAC
+### 6 -  Mise en place du docker-compose pour le Déploiement
+**1 - Production du docker-compose.yml**
 
+Notre **docker-compose** comportera les sections suivantes:
+- **services** *website pour l'IHM et api pour l'API*
+  - le paramètre **depends_on** permet de lancer l'API avant l'IHM
+  - dans les bonnes pratiques on choisira le paramètre **env_file** à la place de **environment** pour stocker des informations sensibles dans un fichier nommé **.env**
+  - pour des raisons de sécurité on va optimiser l'API pour qu'il n'écoute que sur 127.0.0.1 dans la partie port en remplaçant **5000:5000** par **127.0.0.1:5000:5000**
+- **volumes** *de type bind pour monter les répertoires des deux services*
+- **network** *pour créer un réseau dedié aux deux services*
+
+
+```
+version: "2.2"
+services:
+  website:
+    container_name: webapp
+    image: php:apache
+    depends_on:
+      - api
+    env_file:
+      - .env
+    ports:
+     - 80:80
+    volumes:
+     - ./website:/var/www/html 
+    networks:
+    - api-network
+
+  api:
+   container_name: student-api
+   image: api-student-list:latest
+   ports:
+    - 127.0.0.1:5000:5000
+   volumes:
+    - ./data/student_age.json:/data/student_age.json
+   networks:
+    - api-network
+
+volumes:
+  data:
+
+networks:
+  api-network:
+    name: api-network
+    driver: bridge
+```
+**2 - Déploiement des conteneurs**
+
+Pour déployer les conteneurs il faut se deplacer dans le même répertoire que notre docker-compose.yml et saisir la commande ci-dessous en mode détaché avec l'option **-d**
+```
+docker-compose up -d
+docker-compose ps
+```
+<div>
+  <img src="screenshots/docker-compose-ps.png"/>
+
+</div><br/>
+
+**3 - Test**
+
+Pour récuperer de l'adresse Ip du serveur on tape la commande ci-dessous 
+
+```
+ifconfig eth1
+```
+<div>
+  <img src="screenshots/ifconfig.png"/>
+</div><br/>
+
+Test à partir du navigateur
+
+<div>
+  <img src="screenshots/webapp.png"/>
+</div><br/>
+
+## 7 - Mise en place du registre privé
+
+Nous allons procéder à la mise en place de registre prive en utilisant:
+
+**registry:2** comme image du registre, et **joxit/docker-registry-ui:static** comme image du frontend
+
+*production du docker compose du registre privé*
+
+```
+version: '3.3'
+services:
+  pozos-registry:
+    image: registry:2.8.1
+    container_name: pozos-registry
+    restart: always
+    ports: 
+      - "5000:5000"
+    volumes:
+      - /opt/docker/registry:/var/lib/registry
+      - ./registry/auth:/auth
+    environment:
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
+    command:
+      - /bin/sh
+      - -c
+      - 'apk add --no-cache apache2-utils && htpasswd -Bbn pozos pozos > /auth/htpasswd && registry serve /etc/docker/registry/config.yml'
+    networks:
+      - pozos-registry-network
+
+  frontend-registry:
+    image: joxit/docker-registry-ui:2
+    container_name: frontend-registry
+    depends_on:
+      - pozos-registry
+    ports: 
+      - "8080:80"
+    environment:
+      - NGINX_PROXY_PASS_URL=http://pozos-registry:5000
+      - DELETE_IMAGES=true
+      - REGISTRY_TITLE=Pozos
+      - SINGLE_REGISTRY=true
+    networks:
+      - pozos-registry-network
+
+networks:
+  pozos-registry-network:
+```
+
+**Déploiement du registre**
+
+```
+docker-compose -f registre.yml up -d
+
+docker ps
+```
+<div>
+  <img src="screenshots/registre-prive.png"/>
+</div><br/>
+
+
+à partir du navigateur
+<div>
+  <img src="screenshots/frontend-registre.png"/>
+</div><br/>
+
+**Login au registre**
+```
+docker login -u pozos -p pozos http://localhost:8080/
+```
+<div>
+  <img src="screenshots/login.png"/>
+</div><br/>
+
+**Tag et push de l'image**
+
+```
+docker tag api-student-list localhost:8080/api-student-list
+docker push localhost:8080/api-student-list
+```
+<div>
+  <img src="screenshots/push.png"/>
+</div><br/>
+
+**Vérification**
+
+<div>
+  <img src="screenshots/image-registre.png"/>
+</div><br/>
+
+<div>
+  <img src="screenshots/image-registre2.png"/>
+</div><br/>
+
+## Conclusion
 ## Authors
 
 - [@octokatherine](https://www.github.com/octokatherine)
