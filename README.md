@@ -1,7 +1,6 @@
 # Mini Projet Docker (students list)
 <div align="center">
   <img src="screenshots/docker.png"/>
-#
 </div>
 #
 
