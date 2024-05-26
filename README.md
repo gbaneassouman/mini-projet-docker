@@ -375,5 +375,5 @@ docker push localhost:8080/api-student-list
 Ce Mini projet sur Docker a été l'occasion pour moi de mettre en pratique les notions apprises durant les cours, il m'a aussi permet d'approfondir ces notions et ainsi améliorer mes compétences sur Docker.
 ## Authors
 
-- [@octokatherine](https://www.github.com/octokatherine)
+- [@gbaneassouman](https://www.github.com/gbaneassouman)
 
