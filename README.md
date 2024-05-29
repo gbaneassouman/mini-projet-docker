@@ -108,7 +108,6 @@ LABEL maintainer="GBANE Assouman gbane.assouman@gmail.com"
 
 - <strong>Installation des dépendances </strong><br/>
 RUN apt update -y && apt install python-dev python3-dev libsasl2-dev python-dev libldap2-dev libssl-dev -y
-
 RUN pip install  flask==1.1.2 flask_httpauth==4.1.0 flask_simpleldap python-dotenv==0.14.0
 
 - <strong>répertoire où sera stocké le fichier student_age.json </strong><br/>
@@ -202,10 +201,9 @@ docker network rm api-network
 
 Notre **docker-compose** comportera les sections suivantes:
 - **services** *website pour l'IHM et api pour l'API*
-  - le paramètre **depends_on** permet de lancer l'API avant l'IHM
-  - dans les bonnes pratiques on choisira le paramètre **env_file** à la place de **environment** pour stocker des informations sensibles dans un fichier nommé **.env**
-  - pour des raisons de sécurité on va optimiser l'API pour qu'il n'écoute que sur 127.0.0.1 dans la partie port en remplaçant **5000:5000** par **127.0.0.1:5000:5000**
-- **volumes** *de type bind pour monter les répertoires des deux services*
+- le paramètre **depends_on** permet de lancer l'API avant l'IHM
+- dans les bonnes pratiques on choisira le paramètre **env_file** à la place de **environment** pour stocker des informations sensibles dans un fichier nommé **.env**
+- **5000:5000** expose l'api sur le port 5000 de la machine hôte
 - **network** *pour créer un réseau dedié aux deux services*
 
 
@@ -232,17 +230,12 @@ services:
    ports:
     - 5000:5000
    volumes:
-    - ./data/student_age.json:/data/student_age.json
+    - ./simple_api/student_age.json:/data/student_age.json
    networks:
     - api-network
 
-volumes:
-  data:
-
 networks:
   api-network:
-    name: api-network
-    driver: bridge
 ```
 **2 - Déploiement des conteneurs**
 
