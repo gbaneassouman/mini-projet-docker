@@ -203,7 +203,7 @@ Notre **docker-compose** comportera les sections suivantes:
 - **services** *website pour l'IHM et api pour l'API*
 - le paramètre **depends_on** permet de lancer l'API avant l'IHM
 - dans les bonnes pratiques on choisira le paramètre **env_file** à la place de **environment** pour stocker des informations sensibles dans un fichier nommé **.env**
-- **5000:5000** expose l'api sur le port 5000 de la machine hôte
+- ports: permet d'exposer l'api sur le port 5000 de la machine hôte
 - **network** *pour créer un réseau dedié aux deux services*
 
 
