@@ -20,16 +20,11 @@ services:
    ports:
     - 5000:5000
    volumes:
-    - ./data/student_age.json:/data/student_age.json
+    - ./simple_api/student_age.json:/data/student_age.json
    networks:
     - api-network
 
-volumes:
-  data:
-
 networks:
   api-network:
-    name: api-network
-    driver: bridge
- 
+    
   
